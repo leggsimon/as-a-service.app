@@ -12,6 +12,12 @@ export async function handler(event, context) {
 		};
 	}
 
+	const generateResponsePayload = result => ({
+		statusCode: 200,
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(result),
+	});
+
 	if (method === 'POST') {
 		const { array, elements } = JSON.parse(body);
 
@@ -21,23 +27,24 @@ export async function handler(event, context) {
 				: JSON.parse(array)
 			: [];
 
-		if (elements) {
-			if (Array.isArray(elements)) {
-				result.push(...elements);
-			} else {
-				if (typeof elements === 'string' && elements.startsWith('[')) {
-					result.push(...JSON.parse(elements));
-				} else {
-					result.push(elements);
-				}
-			}
+		if (!elements) {
+			// send back the array
+			return generateResponsePayload(result);
 		}
 
-		return {
-			statusCode: 200,
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(result),
-		};
+		if (Array.isArray(elements)) {
+			result.push(...elements);
+			return generateResponsePayload(result);
+		}
+
+		// If elements is a string and looks like an array, try and parse it first
+		if (typeof elements === 'string' && elements.startsWith('[')) {
+			result.push(...JSON.parse(elements));
+			return generateResponsePayload(result);
+		}
+
+		result.push(elements);
+		return generateResponsePayload(result);
 	}
 
 	return {
