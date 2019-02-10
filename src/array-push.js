@@ -45,8 +45,16 @@ export async function handler(event, context) {
 
 	// If elements is a string and looks like an array, try and parse it first
 	if (typeof elements === 'string' && elements.startsWith('[')) {
-		result.push(...JSON.parse(elements));
-		return generateResponsePayload(result);
+		try {
+			const parsedElements = JSON.parse(elements);
+			result.push(...parsedElements);
+			return generateResponsePayload(result);
+		} catch (_) {
+			return generateErrorPayload(
+				500,
+				'`elements` couldn’t be parsed correctly, if you wish to push the string use the `doNotCoerce=true` query parameter'
+			);
+		}
 	}
 
 	result.push(elements);

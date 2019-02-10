@@ -108,5 +108,21 @@ describe('array-push', () => {
 				expect(parsedBody).toEqual({ error: 'Method Not Allowed' });
 			}
 		);
+
+		it('should return an error prompting the user to use an option if the elements couldn’t be parsed', async () => {
+			const result = await arrayPush(
+				{
+					array: [1, 2],
+					elements: '[3, 4',
+				},
+				{ onlyRespondWithBody: false }
+			);
+
+			expect(result.statusCode).toEqual(500);
+			expect(result.body).toEqual({
+				error:
+					'`elements` couldn’t be parsed correctly, if you wish to push the string use the `doNotCoerce=true` query parameter',
+			});
+		});
 	});
 });
