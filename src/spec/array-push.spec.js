@@ -97,7 +97,7 @@ describe('array-push', () => {
 		])(
 			'should return a 405 Method Not Allowed for a %s request',
 			async method => {
-				const { statusCode, headers, body } = await handler({
+				const { statusCode, body } = await handler({
 					httpMethod: method,
 					body: JSON.stringify({ array: [], elements: 1 }),
 				});
