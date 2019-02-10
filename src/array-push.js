@@ -15,7 +15,11 @@ export async function handler(event, context) {
 	if (method === 'POST') {
 		const { array, elements } = JSON.parse(body);
 
-		const result = Array.isArray(array) ? array : JSON.parse(array);
+		const result = array
+			? Array.isArray(array)
+				? array
+				: JSON.parse(array)
+			: [];
 
 		if (elements) {
 			if (Array.isArray(elements)) {

@@ -40,6 +40,12 @@ describe('array-push', () => {
 		expect(result).toEqual([1, 2, 3, 4]);
 	});
 
+	it('should instantiate a new array if one wasn’t given', async () => {
+		const result = await arrayPush({ elements: [3, 4] });
+
+		expect(result).toEqual([3, 4]);
+	});
+
 	describe('error handling', () => {
 		it.todo(
 			'should return a 405 Method Not Allowed for anything other than GET or POST'
