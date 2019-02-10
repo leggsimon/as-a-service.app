@@ -12,7 +12,7 @@ const generateErrorPayload = (statusCode, message) => {
 };
 
 export async function handler(event, context) {
-	const { httpMethod, body } = event;
+	const { httpMethod, body, queryStringParameters } = event;
 
 	if (httpMethod.toUpperCase() !== 'POST') {
 		return generateErrorPayload(405, 'Method Not Allowed');
@@ -40,6 +40,13 @@ export async function handler(event, context) {
 
 	if (Array.isArray(elements)) {
 		result.push(...elements);
+		return generateResponsePayload(result);
+	}
+
+	const { doNotCoerce } = queryStringParameters;
+
+	if (typeof elements === 'string' && doNotCoerce === 'true') {
+		result.push(elements);
 		return generateResponsePayload(result);
 	}
 

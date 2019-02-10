@@ -2,11 +2,12 @@ import { handler } from '../array-push';
 
 const arrayPush = async (
 	bodyToSend,
-	options = { onlyRespondWithBody: true }
+	options = { onlyRespondWithBody: true, queryStringParameters: {} }
 ) => {
 	const { statusCode, headers, body } = await handler({
 		httpMethod: 'POST',
 		body: JSON.stringify(bodyToSend),
+		queryStringParameters: options.queryStringParameters || {},
 	});
 
 	const parsedBody = JSON.parse(body);
@@ -59,11 +60,17 @@ describe('array-push', () => {
 		expect(result).toEqual([1, 2, 3, 4]);
 	});
 
-	it.skip('should push the array as a string if an option is passed', async () => {
-		const result = await arrayPush({
-			array: [1, 2],
-			elements: '[3, 4]',
-		});
+	it('should push the array as a string if an option is passed', async () => {
+		const result = await arrayPush(
+			{
+				array: [1, 2],
+				elements: '[3, 4]',
+			},
+			{
+				queryStringParameters: { doNotCoerce: 'true' },
+				onlyRespondWithBody: true,
+			}
+		);
 
 		expect(result).toEqual([1, 2, '[3, 4]']);
 	});
@@ -109,7 +116,7 @@ describe('array-push', () => {
 			}
 		);
 
-		it('should return an error prompting the user to use an option if the elements couldn’t be parsed', async () => {
+		it('should return a 500 error prompting the user to use an option if the elements couldn’t be parsed', async () => {
 			const result = await arrayPush(
 				{
 					array: [1, 2],
