@@ -84,6 +84,29 @@ describe('array-push', () => {
 					'You must provide at least one of an `array` or `elements` property.',
 			});
 		});
+
+		it.each([
+			'GET',
+			'HEAD',
+			'PUT',
+			'DELETE',
+			'CONNECT',
+			'OPTIONS',
+			'TRACE',
+			'PATCH',
+		])(
+			'should return a 405 Method Not Allowed for a %s request',
+			async method => {
+				const { statusCode, headers, body } = await handler({
+					httpMethod: method,
+					body: JSON.stringify({ array: [], elements: 1 }),
+				});
+
+				const parsedBody = JSON.parse(body);
+
+				expect(statusCode).toEqual(405);
+				expect(parsedBody).toEqual({ error: 'Method Not Allowed' });
+			}
 		);
 		it.todo(
 			'should throw an error if the array property is not an array or array string'
