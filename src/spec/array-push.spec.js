@@ -1,21 +1,24 @@
 import { handler } from '../array-push';
 
+const arrayPush = async body => {
+	const response = await handler({
+		httpMethod: 'POST',
+		body: JSON.stringify(body),
+	});
+
+	return JSON.parse(response.body);
+};
+
 describe('array-push', () => {
 	it('should add an element to an empty array', async () => {
-		const response = await handler({
-			httpMethod: 'POST',
-			body: JSON.stringify({ array: [], elements: 1 }),
-		});
-		const result = JSON.parse(response.body);
+		const result = await arrayPush({ array: [], elements: 1 });
+
 		expect(result).toEqual([1]);
 	});
 
 	it('should add an element to an array with existing elements', async () => {
-		const response = await handler({
-			httpMethod: 'POST',
-			body: JSON.stringify({ array: ['something'], elements: 1 }),
-		});
-		const result = JSON.parse(response.body);
+		const result = await arrayPush({ array: ['something'], elements: 1 });
+
 		expect(result).toEqual(['something', 1]);
 	});
 
