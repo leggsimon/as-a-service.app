@@ -108,11 +108,5 @@ describe('array-push', () => {
 				expect(parsedBody).toEqual({ error: 'Method Not Allowed' });
 			}
 		);
-		it.todo(
-			'should throw an error if the array property is not an array or array string'
-		);
-		it.todo(
-			'should return a 405 Method Not Allowed for anything other than GET or POST'
-		);
 	});
 });
