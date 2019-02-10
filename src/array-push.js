@@ -15,7 +15,9 @@ export async function handler(event, context) {
 	if (method === 'POST') {
 		const { array, elements } = JSON.parse(body);
 
-		array.push(elements);
+		if (elements) {
+			array.push(elements);
+		}
 
 		return {
 			statusCode: 200,

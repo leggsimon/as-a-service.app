@@ -22,7 +22,12 @@ describe('array-push', () => {
 		expect(result).toEqual(['something', 1]);
 	});
 
-	it.todo('should return the array if no elements were passed');
+	it('should return the array if no elements were passed', async () => {
+		const result = await arrayPush({ array: [1, 2] });
+
+		expect(result).toEqual([1, 2]);
+	});
+
 	it.todo('should add an array of elements to an array');
 	it.todo('should accept an array as a string');
 
