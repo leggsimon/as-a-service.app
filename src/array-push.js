@@ -16,7 +16,11 @@ export async function handler(event, context) {
 		const { array, elements } = JSON.parse(body);
 
 		if (elements) {
-			array.push(elements);
+			if (Array.isArray(elements)) {
+				array.push(...elements);
+			} else {
+				array.push(elements);
+			}
 		}
 
 		return {
