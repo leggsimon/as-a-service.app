@@ -12,14 +12,27 @@ export async function handler(event, context) {
 		};
 	}
 
-	const generateResponsePayload = result => ({
-		statusCode: 200,
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(result),
-	});
+	const generateResponsePayload = (result, overrides) => {
+		return {
+			statusCode: 200,
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(result),
+			...overrides,
+		};
+	};
 
 	if (method === 'POST') {
 		const { array, elements } = JSON.parse(body);
+
+		if (!array && !elements) {
+			return generateResponsePayload(
+				{
+					error:
+						'You must provide at least one of an `array` or `elements` property.',
+				},
+				{ statusCode: 406 }
+			);
+		}
 
 		const result = array
 			? Array.isArray(array)

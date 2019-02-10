@@ -1,12 +1,25 @@
 import { handler } from '../array-push';
 
-const arrayPush = async body => {
-	const response = await handler({
+const arrayPush = async (
+	bodyToSend,
+	options = { onlyRespondWithBody: true }
+) => {
+	const { statusCode, headers, body } = await handler({
 		httpMethod: 'POST',
-		body: JSON.stringify(body),
+		body: JSON.stringify(bodyToSend),
 	});
 
-	return JSON.parse(response.body);
+	const parsedBody = JSON.parse(body);
+
+	if (options.onlyRespondWithBody) {
+		return parsedBody;
+	} else {
+		return {
+			statusCode,
+			headers,
+			body: parsedBody,
+		};
+	}
 };
 
 describe('array-push', () => {
@@ -62,8 +75,15 @@ describe('array-push', () => {
 	});
 
 	describe('error handling', () => {
-		it.todo(
-			'should return a 405 Method Not Allowed for anything other than GET or POST'
+		it('should return a 406 Not Acceptable if not passed an array or elements', async () => {
+			const result = await arrayPush({}, { onlyRespondWithBody: false });
+
+			expect(result.statusCode).toEqual(406);
+			expect(result.body).toEqual({
+				error:
+					'You must provide at least one of an `array` or `elements` property.',
+			});
+		});
 		);
 		it.todo(
 			'should throw an error if the array property is not an array or array string'
