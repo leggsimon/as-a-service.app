@@ -34,7 +34,11 @@ describe('array-push', () => {
 		expect(result).toEqual([1, 2, 3, 4]);
 	});
 
-	it.todo('should accept an array as a string');
+	it('should convert a string to an array before pushing', async () => {
+		const result = await arrayPush({ array: '[1, 2]', elements: [3, 4] });
+
+		expect(result).toEqual([1, 2, 3, 4]);
+	});
 
 	describe('error handling', () => {
 		it.todo(

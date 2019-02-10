@@ -15,18 +15,20 @@ export async function handler(event, context) {
 	if (method === 'POST') {
 		const { array, elements } = JSON.parse(body);
 
+		const result = Array.isArray(array) ? array : JSON.parse(array);
+
 		if (elements) {
 			if (Array.isArray(elements)) {
-				array.push(...elements);
+				result.push(...elements);
 			} else {
-				array.push(elements);
+				result.push(elements);
 			}
 		}
 
 		return {
 			statusCode: 200,
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(array),
+			body: JSON.stringify(result),
 		};
 	}
 
