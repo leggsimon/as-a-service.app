@@ -25,7 +25,11 @@ export async function handler(event, context) {
 			if (Array.isArray(elements)) {
 				result.push(...elements);
 			} else {
-				result.push(elements);
+				if (typeof elements === 'string' && elements.startsWith('[')) {
+					result.push(...JSON.parse(elements));
+				} else {
+					result.push(elements);
+				}
 			}
 		}
 

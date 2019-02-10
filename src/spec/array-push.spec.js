@@ -40,6 +40,21 @@ describe('array-push', () => {
 		expect(result).toEqual([1, 2, 3, 4]);
 	});
 
+	it('should convert elements to an array if it’s an array as a string', async () => {
+		const result = await arrayPush({ array: [1, 2], elements: '[3, 4]' });
+
+		expect(result).toEqual([1, 2, 3, 4]);
+	});
+
+	it.skip('should push the array as a string if an option is passed', async () => {
+		const result = await arrayPush({
+			array: [1, 2],
+			elements: '[3, 4]',
+		});
+
+		expect(result).toEqual([1, 2, '[3, 4]']);
+	});
+
 	it('should instantiate a new array if one wasn’t given', async () => {
 		const result = await arrayPush({ elements: [3, 4] });
 
