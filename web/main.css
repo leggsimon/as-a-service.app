@@ -1,0 +1,63 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	color: white;
+	background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+main {
+	text-align: center;
+}
+
+main h1 {
+	text-transform: capitalize;
+	font-size: 2.5em;
+}
+
+main p {
+	font-size: 1.7em;
+}
+footer {
+	display: flex;
+	/* flex-direction: column; */
+	/* align-items: center; */
+	justify-content: center;
+}
+
+.footer-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
+.icons {
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+	width: 80%;
+}
+
+svg {
+	display: inline-block;
+	width: 2em;
+	vertical-align: middle;
+}
+
+.icon--github:hover svg path {
+	fill: black;
+}
+
+.icon--twitter:hover svg path {
+	fill: #1da1f2;
+}
