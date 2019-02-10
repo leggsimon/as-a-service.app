@@ -11,6 +11,9 @@ body {
 	justify-content: space-evenly;
 }
 
+body {
+	overflow: hidden;
+}
 main {
 	text-align: center;
 }
