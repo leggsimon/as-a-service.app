@@ -2,18 +2,17 @@ html,
 body {
 	margin: 0;
 	padding: 0;
-	height: 100vh;
+	height: 100%;
 	font-family: 'Montserrat', sans-serif;
 	color: dimgray;
 	background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+	overflow: hidden;
+	position: fixed;
 }
 
-body {
-	overflow: hidden;
-}
 main {
 	text-align: center;
 }
