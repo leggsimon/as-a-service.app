@@ -6,9 +6,14 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	color: dimgray;
 	background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+// this is the root _next node
+body > div {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+	height: 100%;
 }
 
 main {
@@ -44,18 +49,4 @@ a {
 	justify-content: space-evenly;
 	flex-direction: row;
 	width: 80%;
-}
-
-svg {
-	display: inline-block;
-	width: 2em;
-	vertical-align: middle;
-}
-
-.icon--github:hover svg path {
-	fill: black;
-}
-
-.icon--twitter:hover svg path {
-	fill: #1da1f2;
 }
